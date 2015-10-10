@@ -18,7 +18,7 @@ app.config(
         $routeProvider.when(
 
             '/',
-            { templateUrl: 'signIn.html' }
+            { templateUrl: 'SignIn.html' }
 
         );
 
