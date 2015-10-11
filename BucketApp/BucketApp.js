@@ -5,7 +5,8 @@ var app = angular.module(
 
         'ngRoute',
         'ngTouch',
-        'mobile-angular-ui'
+        'mobile-angular-ui',
+        'firebase'
 
     ]
 
@@ -17,7 +18,11 @@ app.controller(
     [
 
         '$scope',
-        function($scope){
+        '$firebaseSimpleLogin',
+        function($scope, $firebaseSimpleLogin){
+
+            var ref     = new Firebase("https://burning-fire-1723.firebaseio.com");
+            var auth    = $firebaseSimpleLogin(ref);
 
             $scope.user  = {
 
@@ -31,7 +36,36 @@ app.controller(
                 var email       = $scope.user.username;
                 var password    = $scope.user.password;
 
-                if(email && password){}
+                if(email && password){
+
+                    auth
+                    .$login(
+
+                        'password',
+                        {
+
+                            email       : email,
+                            password    : password
+
+                        }
+
+                    )
+                    .then(
+
+                        function(user){
+
+                            console.log('Username and password match!');
+
+                        },
+                        function(error){
+
+                            console.log('Username and password do not match!');
+
+                        }
+
+                    );
+
+                }
 
             }
 
